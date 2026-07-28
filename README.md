@@ -21,6 +21,8 @@ access.
 - `BRIGHT_DATA_WEB_UNLOCKER_ZONE`: Web Unlocker zone used for BattleBots pages.
 - `ADMIN_EMAILS`: comma-separated ChatGPT account emails allowed to sync and
   resolve markets.
+- `LOCAL_DEV_AUTH` and `LOCAL_DEV_EMAIL`: optional localhost-only identity
+  fallback for development. Keep `LOCAL_DEV_AUTH` disabled in production.
 
 ## Validation
 

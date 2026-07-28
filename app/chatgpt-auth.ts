@@ -1,4 +1,5 @@
 import { headers } from "next/headers";
+import { env } from "cloudflare:workers";
 import { redirect } from "next/navigation";
 
 export type ChatGPTUser = {
@@ -19,7 +20,11 @@ const CALLBACK_PATH = "/callback";
 export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
   const requestHeaders = await headers();
   const email = requestHeaders.get(USER_EMAIL_HEADER);
-  if (!email) return null;
+  if (!email) {
+    const localUser = getLocalDevelopmentUser(requestHeaders.get("host"));
+    if (localUser) return localUser;
+    return null;
+  }
 
   const encodedFullName = requestHeaders.get(USER_FULL_NAME_HEADER);
   const fullName =
@@ -32,6 +37,34 @@ export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
     displayName: fullName ?? email,
     email,
     fullName,
+  };
+}
+
+function getLocalDevelopmentUser(host: string | null): ChatGPTUser | null {
+  const runtime = env as unknown as {
+    LOCAL_DEV_AUTH?: string;
+    LOCAL_DEV_EMAIL?: string;
+  };
+  let hostname: string | null = null;
+  try {
+    hostname = host ? new URL(`http://${host}`).hostname : null;
+  } catch {
+    hostname = null;
+  }
+  const isLoopback =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "[::1]";
+  const email = runtime.LOCAL_DEV_EMAIL?.trim().toLowerCase();
+
+  if (runtime.LOCAL_DEV_AUTH !== "true" || !isLoopback || !email) {
+    return null;
+  }
+
+  return {
+    displayName: email,
+    email,
+    fullName: null,
   };
 }
 
