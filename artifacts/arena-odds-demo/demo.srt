@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:04,800
+Arena Odds — an unofficial, play-money BattleBots prediction market
+
+2
+00:00:04,800 --> 00:00:06,800
+Browse live fight cards, probabilities, countdowns, and trading volume
+
+3
+00:00:06,800 --> 00:00:13,200
+Open a matchup for robot records, Elo ratings, price history, and the trade tape
+
+4
+00:00:13,200 --> 00:00:17,200
+Choose a robot and enter the number of winner shares
+
+5
+00:00:17,200 --> 00:00:20,800
+Review the live LMSR quote, estimated cost, and post-trade probability
+
+6
+00:00:20,800 --> 00:00:23,200
+Place the order — the market price and volume update immediately
+
+7
+00:00:23,200 --> 00:00:30,000
+The private portfolio shows remaining credits and every open position
+
+8
+00:00:30,000 --> 00:00:36,800
+Pseudonymous players compete on the public leaderboard
+
+9
+00:00:34,400 --> 00:00:36,800
+Virtual credits only • No purchases, prizes, withdrawals, or cash value
