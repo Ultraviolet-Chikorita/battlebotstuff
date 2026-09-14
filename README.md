@@ -16,9 +16,9 @@ A full-stack prototype for **prediction markets around BattleBots matches**. The
 - Cloudflare/Vinext-oriented build/deployment configuration;
 - automated tests executed after a production build.
 
-## Reviewer guide
+## Key components
 
-| File / area | What to inspect |
+| File / area | Responsibility |
 | --- | --- |
 | [`lib/market-engine.ts`](lib/market-engine.ts) | core market transition / pricing logic |
 | [`lib/store.ts`](lib/store.ts) | persistence and application data access |
@@ -30,7 +30,7 @@ A full-stack prototype for **prediction markets around BattleBots matches**. The
 | [`drizzle/`](drizzle/) + [`db/`](db/) | schema and migrations |
 | [`tests/`](tests/) | domain behavior exercised independently of the UI |
 
-The main engineering signal is the boundary between **market/domain transitions** in `lib/`, persistence, and the web application, rather than the visual layer alone.
+The application separates market/domain transitions in `lib/` from persistence and the web application rather than coupling all market behavior directly to the UI.
 
 ## Architecture
 
@@ -77,9 +77,9 @@ See [`.env.example`](.env.example) for runtime configuration.
 ```text
 app/            Next.js routes, pages, API and UI components
 lib/            parsing, market engine, data access
- db/            database setup / schema support
- drizzle/       generated migrations
- tests/         domain/application tests
+db/             database setup / schema support
+drizzle/        generated migrations
+tests/          domain/application tests
 ```
 
 ## Limitations
@@ -87,8 +87,8 @@ lib/            parsing, market engine, data access
 - This is not a real-money exchange and does not implement the compliance, custody, settlement, abuse prevention, or financial controls such a system would require.
 - External event data can be incomplete or change format; parser behavior should be treated as a maintained integration boundary.
 - Market behavior is only as sound as the invariants covered by the current domain tests; more adversarial property tests would be valuable.
-- Some application surfaces are prototype-oriented and the repository is not presented as a general-purpose prediction-market framework.
+- Some application surfaces are prototype-oriented and the repository is not a general-purpose prediction-market framework.
 
-## Best next engineering work
+## Future work
 
-The strongest next step would be to specify market invariants explicitly—e.g. allowed state transitions, position accounting, settlement idempotency and impossible negative balances—and exercise them with property/state-machine tests. That would make the domain model easier to trust independently of the UI and external event feed.
+A useful next step would be to specify market invariants explicitly—e.g. allowed state transitions, position accounting, settlement idempotency and impossible negative balances—and exercise them with property/state-machine tests. That would make the domain model easier to trust independently of the UI and external event feed.
